@@ -4,7 +4,7 @@ import styles from './Footer.module.scss';
 
 const Footer = () => (
   <div className={styles.Footer} data-testid="Footer">
-   &copy;opyright 2020 Orsys
+   Copyright &copy; 2020 Orsys
   </div>
 );
 
