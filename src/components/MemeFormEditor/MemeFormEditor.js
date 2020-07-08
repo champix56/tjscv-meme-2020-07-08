@@ -6,10 +6,14 @@ import Button from '../Button/Button';
 class MemeFormEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedImg: { url: undefined, id: undefined }, texts: [], temporaryText: { x: 50, y: 0, value: "", fontSize: 10 } }
+    this.state = props.store.getState()//{ selectedImg: { url: undefined, id: undefined }, texts: [], temporaryText: { x: 50, y: 0, value: "", fontSize: 10 } }
+    props.store.subscribe(()=>{
+      this.setState(props.store.getState())
+    })
   }
   resetForm() {
-    this.setState({ selectedImg: { url: undefined, id: undefined }, temporaryText: { x: 50, y: 0, value: "", fontSize: 10 }, texts: [] });
+    this.props.store.dispatch({type:'RESET_EDITOR'})
+    // this.setState({ selectedImg: { url: undefined, id: undefined }, temporaryText: { x: 50, y: 0, value: "", fontSize: 10 }, texts: [] });
   }
   saveMeme() {
 
@@ -26,7 +30,7 @@ class MemeFormEditor extends React.Component {
         <br />x:<input type="number" min="0" step="1" value={this.state.temporaryText.x} onChange={e => this.setState({ temporaryText: { ...this.state.temporaryText, x: e.currentTarget.value } })} />
         <br />y:<input type="number" min="0" step="1" value={this.state.temporaryText.y} onChange={e => this.setState({ temporaryText: { ...this.state.temporaryText, y: e.currentTarget.value } })} />
         <br />
-        <br />font size:<input type="number" min="0" step="1" max="20" value={this.state.temporaryText.x} onChange={e => this.setState({ temporaryText: { ...this.state.temporaryText, fontSize: e.currentTarget.value } })} />
+        <br />font size:<input type="number" min="0" step="1" max="20" value={this.state.temporaryText.fontSize} onChange={e => this.setState({ temporaryText: { ...this.state.temporaryText, fontSize: e.currentTarget.value } })} />
         <br />
         <Button bgColor="skyblue" onClick={e => {
           this.setState({ texts: [...this.state.texts, this.state.temporaryText], temporaryText: { x: 0, y: 0, value: "" } })
